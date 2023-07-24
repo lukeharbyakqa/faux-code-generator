@@ -4,7 +4,7 @@
   "description": "Turn real code into faux code.",
   "main": "src/index.pug",
   "scripts": {
-    "dev": "parcel src/index.pug",
+    "dev": "parcel src/index.html",
     "build": "rm -rf dist && parcel build --no-minify src/index.pug --public-url ./ && cp -a ./public/. ./dist/"
   },
   "author": "",
