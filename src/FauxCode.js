@@ -1,5 +1,5 @@
-import light from './github-syntax-light.json';
-import dark from './github-syntax-dark.json';
+import light from '../themes/github-syntax-light.json';
+import dark from '../themes/github-syntax-dark.json';
 import bindings from './gist-syntax-bindings.json';
 
 const themes = {
@@ -15,9 +15,7 @@ const getElementThemeColor = (element, theme) => {
     const { className } = element;
     const type = bindings[className];
     if (theme[type]) return theme[type];
-    if (process.env.NODE_ENV === 'development') {
-      console.warn('Unresolved syntax class: ', className);
-    }
+    // console.log('Unresolved syntax class: ', className);
   }
   return theme.text;
 };
@@ -26,13 +24,13 @@ const splitAndTrim = (text) => {
   const output = [];
   const { length } = text;
   let segment;
-  for (let position = 0; position <= length; position += 1) {
-    if (!segment && text[position] !== ' ') {
-      segment = { start: position };
+  for (let i = 0; i <= length; i += 1) {
+    if (!segment && text[i] !== ' ') {
+      segment = { start: i };
     }
     if (segment && !segment.end) {
-      if (text[position] === ' ' || position === length) {
-        segment.end = position;
+      if (text[i] === ' ' || i === length) {
+        segment.end = i;
         segment.text = text.slice(segment.start, segment.end);
         segment.length = segment.text.length;
         output.push(segment);
