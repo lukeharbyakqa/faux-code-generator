@@ -4,14 +4,16 @@
   "description": "Convert real code from a Github Gist into an SVG image of faux code.",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js"
+    "start": "babel-node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "",
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^3.0.1"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",

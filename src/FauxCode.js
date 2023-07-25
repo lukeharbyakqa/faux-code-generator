@@ -1,6 +1,6 @@
-import light from '../themes/github-syntax-light.json';
-import dark from '../themes/github-syntax-dark.json';
-import bindings from './gist-syntax-bindings.json';
+import light from "../themes/github-syntax-light.json";
+import dark from "../themes/github-syntax-dark.json";
+import bindings from "./gist-syntax-bindings.json";
 
 const themes = {
   light,
@@ -10,7 +10,7 @@ const themes = {
 const loadTheme = (theme) => themes[theme];
 
 const getElementThemeColor = (element, theme) => {
-  const spanElement = element.tagName === 'SPAN';
+  const spanElement = element.tagName === "SPAN";
   if (spanElement) {
     const { className } = element;
     const type = bindings[className];
@@ -25,11 +25,11 @@ const splitAndTrim = (text) => {
   const { length } = text;
   let segment;
   for (let i = 0; i <= length; i += 1) {
-    if (!segment && text[i] !== ' ') {
+    if (!segment && text[i] !== " ") {
       segment = { start: i };
     }
     if (segment && !segment.end) {
-      if (text[i] === ' ' || i === length) {
+      if (text[i] === " " || i === length) {
         segment.end = i;
         segment.text = text.slice(segment.start, segment.end);
         segment.length = segment.text.length;
@@ -88,7 +88,7 @@ class FauxCode {
   }
 
   drawLine(x, y, dx, color = false) {
-    let output = '';
+    let output = "";
     if (Math.abs(dx) > 0) {
       const x1 = x * this.fontSize + this.margin;
       const x2 = x1 + dx * this.fontSize;
@@ -96,7 +96,7 @@ class FauxCode {
       const y2 = y1;
 
       const offset = x > 0 ? this.fontSize / 2 : (this.fontSize / 2) * -1;
-      const strokeAttr = color ? `stroke="${color}" ` : '';
+      const strokeAttr = color ? `stroke="${color}" ` : "";
 
       output += `<line x1="${x1 + offset}" y1="${y1}" x2="${x2 - offset}" y2="${y2}" ${strokeAttr}/>`;
     }
@@ -104,7 +104,7 @@ class FauxCode {
   }
 
   createCodeLine(element, y) {
-    if (element.textContent === '\n') return '';
+    if (element.textContent === "\n") return "";
 
     const children = element.childNodes;
     let output = '    <g class="code line">\n';
@@ -128,7 +128,7 @@ class FauxCode {
       index += text.length;
     });
 
-    output += '    </g>\n';
+    output += "    </g>\n";
     return output;
   }
 
@@ -137,12 +137,12 @@ class FauxCode {
     this.lines.forEach((line, lineNumber) => {
       output += this.createCodeLine(line, lineNumber);
     });
-    output += '  </g>';
+    output += "  </g>";
     return output;
   }
 
   createLineNumbers() {
-    const color = this.theme['line-number'];
+    const color = this.theme["line-number"];
 
     let output = `  <g class="line numbers" stroke="${color}" stroke-linecap="${this.lineCap}" stroke-width="${this.fontSize}">\n`;
     for (let y = 0; y < this.lineCount; y += 1) {
@@ -150,7 +150,7 @@ class FauxCode {
       const line = this.drawLine(this.lineNumberOffset, y, -width);
       output += `      ${line}\n`;
     }
-    output += '  </g>\n';
+    output += "  </g>\n";
 
     return output;
   }
@@ -160,7 +160,7 @@ class FauxCode {
     svg += this.createBackground();
     svg += this.createCodeBlock();
     if (this.lineNumbers) svg += this.createLineNumbers();
-    svg += '</svg>';
+    svg += "</svg>";
 
     return svg;
   }
