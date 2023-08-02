@@ -3,35 +3,33 @@ const fetch = require("node-fetch");
 const { JSDOM } = require("jsdom");
 const express = require("express");
 const app = express();
+const uuid = require("uuid");
 
 import { Server } from "socket.io";
 import FauxCode from "./src/FauxCode";
 import { gists } from "./src/gists";
-import { generateRandomInteger } from "./src/utils";
+import { options, generateRandomInteger } from "./src/utils";
 
 const PORT = 8080;
 const SOCKET_PORT = 3000;
 let interval = 5000;
 const io = new Server(SOCKET_PORT);
 
-const options = {
-  theme: "dark", // 'light' or 'dark' mode
-  fontSize: 5, // Line thickness and width
-  leading: 10, // Space between lines
-  lineCap: "square", // Line ends 'square' or 'round'
-  margin: 50, // Space between canvas edges and code block
-  lineNumbers: true, // Whether or not to include line numbers
-  lineNumberOffset: -3, // Line number offset from margin
-};
+// Create an array for the client sockets
+let clients = [];
+io.on("connection", (socket) => {
+  clients.push(socket);
+});
 
 const getRandomGists = () => {
+  let uniqueId = generateRandomInteger(10000, 9999999);
   interval = generateRandomInteger(5000, 12000); // get random milliseconds between 5 - 12s
   let now = new Date();
   now = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
   // Input: Let's get a random github gist
   const rndGist = gists[Math.floor(Math.random() * gists.length)].toString();
   // Let's generate an output: SVG file
-  const filename = "./public/img/fauxcode.svg";
+  const filename = `./public/img/fauxcode__${uniqueId}.svg`;
   fetch(rndGist)
     .then((res) => res.text())
     .then((body) => {
@@ -46,13 +44,17 @@ const getRandomGists = () => {
       fs.writeFileSync(filename, fauxCode.render());
     })
     .then(() => {
-      io.on("connection", (socket) => {
-        socket.emit("imageUpdate", "Image updated");
-        socket.on("customMessage", (arg) => {
-          console.log(arg);
-        });
-        console.log("Server should be emiting message");
+      clients.forEach((socket, i) => {
+        try {
+          socket.emit("imageUpdate", { data: uniqueId });
+          console.log(`uuid from server: ${uniqueId}`);
+        } catch {
+          // remove socket if there was an error
+          clients[i] = null;
+        }
       });
+      // remove "errored" clients
+      clients = clients.filter((socket) => socket);
     });
 };
 

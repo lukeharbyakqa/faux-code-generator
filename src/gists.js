@@ -1,4 +1,4 @@
-const gists = [
+export const gists = [
   "https://gist.github.com/knutsynstad/265226120c71426420c78c750a4eb727", //
   "https://gist.github.com/lharby/ac438d22ddcd2757618d",
   "https://gist.github.com/lharby/e06d8b2785511d8ffe54",
@@ -30,7 +30,6 @@ const gists = [
   "https://gist.github.com/ijt/950790",
   "https://gist.github.com/getify/2b53198906d320abe650",
   "https://gist.github.com/vsouza/77e6b20520d07652ed7d",
-  "https://gist.github.com/brandonb927/3195465",
   "https://gist.github.com/markd2/2135746",
   "https://gist.github.com/fjcaetano/b0c00a889dc2a17efad9",
   "https://gist.github.com/davbeck/e96b543bc0184b04353e",
@@ -42,6 +41,3 @@ const gists = [
   "https://gist.github.com/dennishn/7155ce946e6c40f70f3e4aa2e703b06b",
   "https://gist.github.com/dennishn/19c4f26bbe98bc792abb91137d69b073",
 ];
-
-const _gists = gists;
-export { _gists as gists };

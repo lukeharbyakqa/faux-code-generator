@@ -4,6 +4,17 @@ body {
   padding: 0;
   background-color: #24292e;
   font-family: monospace;
+  height: 100%;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .logo {
@@ -12,6 +23,7 @@ body {
   top: 2rem;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 1rem;
+  z-index: 1;
 }
 
 .logo img {
@@ -41,3 +53,21 @@ body {
 .invert .logo p {
   color: #000;
 }
+
+.code,
+.fade-in,
+.fade-out {
+  transition: opacity 400ms ease-in;
+}
+
+.code {
+  position: absolute;
+}
+
+/* .fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+} */
