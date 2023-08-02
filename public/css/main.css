@@ -23,7 +23,7 @@ ul {
   top: 2rem;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  z-index: 1;
+  z-index: 5;
 }
 
 .logo img {
@@ -54,20 +54,23 @@ ul {
   color: #000;
 }
 
-.code,
+.wrapper li,
 .fade-in,
 .fade-out {
-  transition: opacity 400ms ease-in;
+  transition: opacity 2000ms ease-in;
 }
 
-.code {
+.wrapper li {
   position: absolute;
-}
-
-/* .fade-in {
-  opacity: 1;
-}
-
-.fade-out {
   opacity: 0;
-} */
+}
+
+.wrapper li.fade-in {
+  opacity: 1;
+  z-index: 1;
+}
+
+.wrapper li.fade-out {
+  opacity: 0;
+  transition: opacity 1000ms ease-in;
+}

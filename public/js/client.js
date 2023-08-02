@@ -1,25 +1,32 @@
+import { delay } from "./utils.js";
+
 const socket = io("ws://localhost:3000");
 
-const wrapper = document.querySelector(".code");
-const logo = document.querySelector(".logo");
+const wrapper = document.querySelector(".wrapper");
 const fadeInClass = "fade-in";
 const fadeOutClass = "fade-out";
+const pendingClass = "pending";
+const interval = 1000;
 
 socket.on("imageUpdate", (arg) => {
-  wrapper.classList.add(fadeOutClass);
-  // delay(1000);
-  // reloadImg(`../img/fauxcode__${arg.data}.svg`);
-  wrapper.classList.remove(fadeOutClass);
-  // delay(1000);
-  wrapper.classList.add(fadeInClass);
-  console.log(JSON.stringify(arg), `uniqueID at client: ${JSON.stringify(arg.data)}`);
+  getNewImage(`./img/fauxcode__${arg.data}.svg`);
 });
 
-function reloadImg(url) {
-  fetch(url, { cache: "reload", mode: "no-cors" });
-  // wrapper.setAttribute(`src`, `${url}?timestamp=${now}`);
-  const img = document.createElement("img");
-  img.classList.add("code");
-  img.setAttribute(`src`, url);
-  img.after(logo);
+function getNewImage(url) {
+  fetch(url);
+  const fadeIn = wrapper.querySelectorAll(`.${fadeInClass}`);
+  const fadeOut = wrapper.querySelectorAll(`.${fadeOutClass}`);
+  const template = `<li class=${pendingClass}><img src=${url} alt="AKQA Developer Day 2023" /></li>`;
+  wrapper.insertAdjacentHTML("beforeend", template);
+  fadeOut.forEach((item) => item.classList.remove(fadeOutClass));
+  delay(interval * 2);
+  if (fadeIn.length >= 1) {
+    fadeIn.forEach((item) => {
+      item.classList.add(fadeOutClass);
+      item.classList.remove(fadeInClass);
+    });
+    delay(interval);
+    fadeOut.forEach((item) => item.remove());
+  }
+  wrapper.querySelector(`.${pendingClass}`).classList.replace(pendingClass, fadeInClass);
 }

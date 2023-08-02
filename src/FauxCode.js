@@ -77,7 +77,7 @@ class FauxCode {
 
   drawRect(x, y, width, height, fillColor) {
     const fill = fillColor || this.theme.background;
-    const rect = `<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="${fill}" />`;
+    const rect = `<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="none" />`;
     return rect;
   }
 

@@ -3,12 +3,11 @@ const fetch = require("node-fetch");
 const { JSDOM } = require("jsdom");
 const express = require("express");
 const app = express();
-const uuid = require("uuid");
 
 import { Server } from "socket.io";
 import FauxCode from "./src/FauxCode";
 import { gists } from "./src/gists";
-import { options, generateRandomInteger } from "./src/utils";
+import { options, generateRandomInteger, cleanUpOldFiles } from "./src/utils";
 
 const PORT = 8080;
 const SOCKET_PORT = 3000;
@@ -23,9 +22,7 @@ io.on("connection", (socket) => {
 
 const getRandomGists = () => {
   let uniqueId = generateRandomInteger(10000, 9999999);
-  interval = generateRandomInteger(5000, 12000); // get random milliseconds between 5 - 12s
-  let now = new Date();
-  now = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+  interval = generateRandomInteger(8000, 20000); // get random milliseconds between 8 - 20s
   // Input: Let's get a random github gist
   const rndGist = gists[Math.floor(Math.random() * gists.length)].toString();
   // Let's generate an output: SVG file
@@ -36,7 +33,6 @@ const getRandomGists = () => {
       const { window } = new JSDOM(body);
       const { document } = window;
       const codeBlock = document.querySelectorAll(".blob-code-inner");
-      console.log(`rndGist: ${rndGist}. Time: ${now}`);
       return codeBlock;
     })
     .then((codeBlock) => {
@@ -55,6 +51,7 @@ const getRandomGists = () => {
       });
       // remove "errored" clients
       clients = clients.filter((socket) => socket);
+      cleanUpOldFiles(interval);
     });
 };
 

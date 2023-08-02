@@ -5,7 +5,6 @@ export const gists = [
   "https://gist.github.com/lukeharbyakqa/ce9d18c3f1be29128b1f0a2305def4e6",
   "https://gist.github.com/profftols/ae1376d76e9acfd829baa345ac7e4208",
   "https://gist.github.com/mwmwmw/fcb910bd1fc52f6bd33b44417130ec97",
-  "https://gist.github.com/pengzhile/448bfcfd548b3ae4e665a84cc86c4694",
   "https://gist.github.com/stdword/77cea397f438d18bfee3d0a516d1375b",
   "https://gist.github.com/paulrosania/257849",
   "https://gist.github.com/scttnlsn/3210919",
