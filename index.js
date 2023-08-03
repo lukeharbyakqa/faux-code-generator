@@ -52,7 +52,7 @@ const getRandomGists = () => {
       });
       // remove "errored" clients
       clients = clients.filter((socket) => socket);
-      cleanUpOldFiles(interval * 3); // always more than the minimum interval of 8s
+      cleanUpOldFiles(interval * 3); // always more than the maximum interval of 20s as the minimum is 8s
     });
 };
 

@@ -4,19 +4,15 @@
   "description": "Convert real code from a Github Gist into an SVG image of faux code.",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js --experimental-modules",
-    "dev": "nodemon index.js --experimental-modules",
-    "rimraf": "./node_modules/rimraf/bin.js"
+    "start": "babel-node index.js --experimental-modules"
   },
-  "author": "",
+  "author": "Knut Synstad, Luke Harby",
   "license": "",
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.28.0",
     "express": "^4.18.2",
-    "nodemon": "^3.0.1",
-    "rimraf": "^5.0.1",
     "socket.io": "^4.7.1"
   },
   "dependencies": {
