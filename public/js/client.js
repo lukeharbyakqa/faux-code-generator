@@ -6,10 +6,13 @@ const wrapper = document.querySelector(".wrapper");
 const fadeInClass = "fade-in";
 const fadeOutClass = "fade-out";
 const pendingClass = "pending";
+const invertClass = "invert";
 const interval = 1000;
+let theme;
 
 socket.on("imageUpdate", (arg) => {
   getNewImage(`./img/fauxcode__${arg.data}.svg`);
+  theme = arg.theme;
 });
 
 function getNewImage(url) {
@@ -29,4 +32,5 @@ function getNewImage(url) {
     fadeOut.forEach((item) => item.remove());
   }
   wrapper.querySelector(`.${pendingClass}`).classList.replace(pendingClass, fadeInClass);
+  theme === "light" ? document.documentElement.classList.add(invertClass) : document.documentElement.classList.remove(invertClass);
 }

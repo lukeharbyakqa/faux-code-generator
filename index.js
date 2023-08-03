@@ -21,12 +21,14 @@ io.on("connection", (socket) => {
 });
 
 const getRandomGists = () => {
+  let rndInteger = Math.round(Math.random());
   let uniqueId = generateRandomInteger(10000, 9999999);
   interval = generateRandomInteger(8000, 20000); // get random milliseconds between 8 - 20s
   // Input: Let's get a random github gist
   const rndGist = gists[Math.floor(Math.random() * gists.length)].toString();
   // Let's generate an output: SVG file
   const filename = `./public/img/fauxcode__${uniqueId}.svg`;
+  rndInteger === 1 ? (options.theme = "light") : (options.theme = "dark");
   fetch(rndGist)
     .then((res) => res.text())
     .then((body) => {
@@ -42,8 +44,7 @@ const getRandomGists = () => {
     .then(() => {
       clients.forEach((socket, i) => {
         try {
-          socket.emit("imageUpdate", { data: uniqueId });
-          console.log(`uuid from server: ${uniqueId}`);
+          socket.emit("imageUpdate", { data: uniqueId, theme: options.theme });
         } catch {
           // remove socket if there was an error
           clients[i] = null;
@@ -51,7 +52,7 @@ const getRandomGists = () => {
       });
       // remove "errored" clients
       clients = clients.filter((socket) => socket);
-      cleanUpOldFiles(interval * 3);
+      cleanUpOldFiles(interval * 3); // always more than the minimum interval of 8s
     });
 };
 
