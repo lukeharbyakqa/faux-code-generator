@@ -51,7 +51,7 @@ const getRandomGists = () => {
       });
       // remove "errored" clients
       clients = clients.filter((socket) => socket);
-      cleanUpOldFiles(interval);
+      cleanUpOldFiles(interval * 3);
     });
 };
 

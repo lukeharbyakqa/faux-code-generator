@@ -19,10 +19,10 @@ ul {
 
 .logo {
   position: fixed;
-  right: 2rem;
-  top: 2rem;
+  right: 4rem;
+  top: 4rem;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 1rem;
+  padding: 2rem;
   z-index: 5;
 }
 

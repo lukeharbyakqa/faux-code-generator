@@ -1,31 +1,29 @@
 import fs from "fs";
 import path from "path";
-import rimraf from "rimraf";
 
 export const cleanUpOldFiles = (interval) => {
   const imgDir = path.join(__dirname, "../public/img/");
 
   fs.readdir(imgDir, function (err, files) {
-    files.forEach(function (file, index) {
-      fs.stat(path.join(imgDir, file), function (err, stat) {
-        let endTime;
-        let now;
-        if (err) {
-          return console.error(err);
-        }
-        now = new Date().getTime();
-        endTime = new Date(stat.ctime).getTime() + interval;
-        if (now > endTime) {
-          return rimraf(path.join(imgDir, file), function (err) {
-            if (err) {
-              return console.error(err);
-            }
-            console.log("successfully deleted");
-          });
-        }
-        console.log(`now: ${now}, endTime: ${endTime}`);
+    files = files.filter((item) => item.startsWith("fauxcode"));
+    if (files.length) {
+      files.forEach(function (file, index) {
+        fs.stat(path.join(imgDir, file), function (err, stat) {
+          let endTime;
+          let now;
+          if (err) {
+            return console.error(err);
+          }
+          now = new Date().getTime();
+          endTime = new Date(stat.ctime).getTime() + interval;
+          if (now > endTime) {
+            fs.rmSync(path.join(imgDir, file), {
+              force: true,
+            });
+          }
+        });
       });
-    });
+    }
   });
 };
 
